@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linear_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+
+        <LinearLayout
+            android:id="@+id/linear_vertical1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear_horizontal1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_backspace"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                   />
+
+                <Button
+                    android:id="@+id/button_ce"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="CE" />
+
+                <Button
+                    android:id="@+id/button_c"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="C" />
+
+                <Button
+                    android:id="@+id/button_minus"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="+/-" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_horizontal2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_7"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="7" />
+
+                <Button
+                    android:id="@+id/button_8"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="8" />
+
+                <Button
+                    android:id="@+id/button_9"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="9" />
+
+                <Button
+                    android:id="@+id/button_divide"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="/" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_horizontal3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_4"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="4" />
+
+                <Button
+                    android:id="@+id/button_5"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="5" />
+
+                <Button
+                    android:id="@+id/button_6"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="6" />
+
+                <Button
+                    android:id="@+id/button_multiply"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="*" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_horizontal4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_1"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="1" />
+
+                <Button
+                    android:id="@+id/button_2"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="2" />
+
+                <Button
+                    android:id="@+id/button_3"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="3" />
+
+                <Button
+                    android:id="@+id/button_subtract"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="-" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_horizontal5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_0"
+                    style="@style/buttons"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/button_dot"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray2"
+                    android:text="." />
+
+                <Button
+                    android:id="@+id/button_addition"
+                    style="@style/buttons"
+                    android:background="@drawable/button_rounded"
+                    android:backgroundTint="@color/custom_gray"
+                    android:text="+" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_vertical2"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_rootsquare"
+                style="@style/buttons"
+                android:background="@drawable/button_rounded"
+                android:backgroundTint="@color/custom_gray"
+                android:text="√" />
+
+            <Button
+                android:id="@+id/button_percent"
+                style="@style/buttons"
+                android:background="@drawable/button_rounded"
+                android:backgroundTint="@color/custom_gray"
+                android:text="%" />
+
+            <Button
+                android:id="@+id/button_divideby"
+                style="@style/buttons"
+                android:background="@drawable/button_rounded"
+                android:backgroundTint="@color/custom_gray"
+                android:text="1/x" />
+
+            <Button
+                android:id="@+id/button_equals"
+                style="@style/buttons"
+                android:layout_weight="1"
+                android:background="@drawable/button_rounded"
+                android:backgroundTint="@color/custom_gray"
+                android:text="=" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@id/linear_main"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+
+</RelativeLayout>

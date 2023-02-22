@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="buttons" parent="Widget.AppCompat.Button">
+        <item name="android:layout_height">54dp</item>
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:fontFamily">@font/worksans</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginTop">35dp</item>
+
+    </style>
+
+</resources>
