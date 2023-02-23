@@ -260,5 +260,4 @@
         android:gravity="right|top"
         android:textColor="@color/custom_gray"
         android:textSize="38dp" />
-
 </RelativeLayout>
