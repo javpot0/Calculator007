@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background1">
 
     <LinearLayout
         android:id="@+id/linear_main"
@@ -14,7 +13,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@color/background2">
 
         <LinearLayout
             android:id="@+id/linear_vertical1"
@@ -239,15 +239,34 @@
 
     <EditText
         android:id="@+id/input"
+        android:inputType="numberSigned"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_above="@id/linear_main"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="25dp"
-        android:gravity="right|bottom"
-        android:inputType="numberSigned"
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="right|center"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="#BF111111"
+        android:textColor="@color/custom_gray2"
+        android:textSize="72dp"
         android:text="0" />
+
+    <TextView
+        android:id="@+id/output"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_above="@id/input"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="right|top"
+        android:textColor="@color/custom_gray"
+        android:textSize="38dp"
+        android:text="45" />
 
 </RelativeLayout>
