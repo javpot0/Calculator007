@@ -1,17 +1,17 @@
 package com.example.calculator;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-TextView input,output;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    TextView input,output;
 
     private final int[] btn_numbers_ids = {
             R.id.button_0, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5,
@@ -53,7 +53,6 @@ TextView input,output;
 
         this.setListeners();
     }
-
     // GETS EACH ID IN THE LIST OF INT AND ADDS THE BUTTON OBJECT TO LIST
     private void addButtonsToList(int[] ids, ArrayList<Button> list) {
         Button button = null;
@@ -87,33 +86,56 @@ TextView input,output;
             operator.setBackgroundColor(operator.equals(this.buttons_operators.get(i)) ? selected : normal);
         }
     }
-
-    // ZAFER
-
-    /*
     @Override
     public void onClick(View view) {
         Button btn = (Button) view;
         String btnText = btn.getText().toString();
         String btnTag = btn.getTag().toString();
         String equation = input.getText().toString();
+        double a = Double.parseDouble(equation.substring(0));
+        double b = Double.parseDouble(equation.substring(String.valueOf(a).length()+1));
 
         switch (btnText) {
             case "CE" :
+            case "C" :
                 output.setText("");
                 input.setText("0");
                 break;
             case "/" :
+                Calculator.operate(a,b,"division");
                 break;
                 case "*" :
-                break;
-                case "+" :
-                break;
-                case "-" :
-                break;
-                case "=" :
-                    output.setText(output.getText());
+                    Calculator.operate(a,b,"multiplication");
                     break;
+                case "+" :
+                    Calculator.operate(a,b,"subtraction");
+                    break;
+                case "-" :
+                    Calculator.operate(a,b,"addition");
+                    break;
+            case "=" :
+                output.setText(output.getText());
+                break;
+            case "√" :
+                Calculator.root(a);
+                equation += a;
+                break;
+            case "%" :
+                Calculator.operate(a,100,"division");
+                break;
+            case "+/-" :
+                if (a < 0) {
+                    Math.abs(a);
+                    equation += a;
+                }else if (a > 0) {
+                    a = 0 - a;
+                    equation += a;
+                }
+                break;
+            case "1/X" :
+                Calculator.operate(1,a,"division");
+                equation += a;
+                break;
             default:
                 break;
         }
@@ -126,6 +148,4 @@ TextView input,output;
 
 
     }
-
-     */
 }
