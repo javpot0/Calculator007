@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/background1">
+    android:background="@color/background1"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linear_main"
@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"
-        android:orientation="horizontal"
+        android:background="@color/background2"
         android:gravity="center"
-        android:background="@color/background2">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/linear_vertical1"
@@ -34,7 +34,8 @@
                     style="@style/buttons"
                     android:background="@drawable/button_rounded"
                     android:backgroundTint="@color/custom_gray"
-                    android:foreground="@android:drawable/ic_input_delete" />
+                    android:foreground="@android:drawable/ic_input_delete"
+                    android:foregroundGravity="center" />
 
                 <Button
                     android:id="@+id/button_ce"
@@ -232,21 +233,21 @@
 
     <EditText
         android:id="@+id/input"
-        android:inputType="numberSigned"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_above="@id/linear_main"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:gravity="right|center"
         android:background="@drawable/button_rounded"
         android:backgroundTint="#BF111111"
+        android:gravity="right|center"
+        android:inputType="numberSigned"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="0"
         android:textColor="@color/custom_gray2"
-        android:textSize="72dp"
-        android:text="0" />
+        android:textSize="72dp" />
 
     <TextView
         android:id="@+id/output"
@@ -254,8 +255,8 @@
         android:layout_height="75dp"
         android:layout_above="@id/input"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:gravity="right|top"
         android:textColor="@color/custom_gray"
