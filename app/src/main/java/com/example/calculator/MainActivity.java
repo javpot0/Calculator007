@@ -70,5 +70,6 @@ TextView input,output;
         }
         output.setText(equation);
 
+
     }
 }
