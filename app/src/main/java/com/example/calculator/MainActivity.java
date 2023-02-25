@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-TextView input,output;
+    TextView input,output;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,6 @@ TextView input,output;
     public void onClick(View view) {
         Button btn = (Button) view;
         String btnText = btn.getText().toString();
-
+//test push
     }
 }
