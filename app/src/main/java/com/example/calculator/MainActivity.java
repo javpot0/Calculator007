@@ -53,24 +53,50 @@ TextView input,output;
         String btnText = btn.getText().toString();
         String btnTag = btn.getTag().toString();
         String equation = input.getText().toString();
+        double a = Double.parseDouble(equation.substring(0));
+        double b = Double.parseDouble(equation.substring(String.valueOf(a).length()+1));
 
         switch (btnText) {
             case "CE" :
+            case "C" :
                 output.setText("");
                 input.setText("0");
                 break;
             case "/" :
-
+                Calculator.operate(a,b,"division");
                 break;
                 case "*" :
-                break;
-                case "+" :
-                break;
-                case "-" :
-                break;
-                case "=" :
-                    output.setText(output.getText());
+                    Calculator.operate(a,b,"multiplication");
                     break;
+                case "+" :
+                    Calculator.operate(a,b,"subtraction");
+                    break;
+                case "-" :
+                    Calculator.operate(a,b,"addition");
+                    break;
+            case "=" :
+                output.setText(output.getText());
+                break;
+            case "√" :
+                Calculator.root(a);
+                equation += a;
+                break;
+            case "%" :
+                Calculator.operate(a,100,"division");
+                break;
+            case "+/-" :
+                if (a < 0) {
+                    Math.abs(a);
+                    equation += a;
+                }else if (a > 0) {
+                    a = 0 - a;
+                    equation += a;
+                }
+                break;
+            case "1/X" :
+                Calculator.operate(1,a,"division");
+                equation += a;
+                break;
             default:
                 break;
         }
