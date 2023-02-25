@@ -34,7 +34,7 @@
                     style="@style/buttons"
                     android:background="@drawable/button_rounded"
                     android:backgroundTint="@color/custom_gray"
-                   />
+                    android:foreground="@android:drawable/ic_input_delete" />
 
                 <Button
                     android:id="@+id/button_ce"
