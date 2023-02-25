@@ -54,20 +54,31 @@ TextView input,output;
         String btnTag = btn.getTag().toString();
         String equation = input.getText().toString();
 
-        if(btnText.equals("CE")){
-            output.setText("");
-            output.setText("0");
-            return;
+        switch (btnText) {
+            case "CE" :
+                output.setText("");
+                input.setText("0");
+                break;
+            case "/" :
+
+                break;
+                case "*" :
+                break;
+                case "+" :
+                break;
+                case "-" :
+                break;
+                case "=" :
+                    output.setText(output.getText());
+                    break;
+            default:
+                break;
         }
-        if(btnText.equals("=")){
-            output.setText(output.getText());
-            return;
-        }
+
         if(btnTag.equals("backspace")){
             equation = equation.substring(0,equation.length()-1);
-        }else{
-            equation += btnText;
         }
+        equation += btnText;
         output.setText(equation);
 
 
