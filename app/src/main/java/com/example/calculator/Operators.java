@@ -1,3 +1,5 @@
+package com.example.calculator;
+
 import java.util.function.BinaryOperator;
 
 public enum Operators {

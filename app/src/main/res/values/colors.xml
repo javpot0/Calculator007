@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="custom_gray">#6c7a89</color>
+    <color name="custom_graySelected">#A5B0BC</color>
     <color name="custom_gray2">#FF86A3C4</color>
     <color name="background1">#1a1e21</color>
     <color name="background2">#31383e</color>
