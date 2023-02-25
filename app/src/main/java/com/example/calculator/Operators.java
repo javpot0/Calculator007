@@ -4,9 +4,9 @@ import java.util.function.BinaryOperator;
 
 public enum Operators {
 
-    divide((a, b) -> a / b),
-    multiply((a, b) -> a * b),
-    subtract((a, b) -> a - b),
+    division((a, b) -> a / b),
+    multiplication((a, b) -> a * b),
+    subtraction((a, b) -> a - b),
     addition((a, b) -> a + b);
 
     private final BinaryOperator<Double> operation;
