@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         else
             this.input.setText(Tools.concat(current, text));
 
-        this.updateInputDisplay();
+        // REMOVED FOR NOW CUZ INFINITE RECURSION
+        // this.updateInputDisplay();
     }
 
     // Updates input textview after parsing numbers and operator
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
     // Behavior for quick operation buttons - **Consider optimizing code readability/atomize into methods
     private void setQuickOps(Button quickOp) {
         int id = quickOp.getId();
+        /*
         String operation = "";
         double a, b, result;
 
@@ -190,22 +192,32 @@ public class MainActivity extends AppCompatActivity {
                 this.firstNumber = Calculator.operate(a, b, operation);
             }
         }
+        */
 
-        if (this.isUnaryOperable()) {
-            if (id == R.id.button_squareRoot) {
+        if (this.isUnaryOperable())
+            if (id == R.id.button_minus)
+                this.minus();
+            else if (id == R.id.button_squareRoot)
                 this.squareroot();
-                this.output.setText(Tools.concat(Tools.getText(quickOp), Tools.formatNumber(this.firstNumber)));
-                a = this.firstNumber;
-                operation = Tools.getText(quickOp);
-            } else {
-                if (id == R.id.button_minus && !this.isBinaryOperable())
-                    this.firstNumber = -this.firstNumber;
-                else
-                    this.quickDivides(id == R.id.button_percentage);
-            }
+            else
+                this.quickDivides(id == R.id.button_percentage);
+    }
 
+    private void minus() {
+        double temp = DEFAULT_VALUE;
 
+        if (this.isBinaryOperable()) {
+            this.output.setText(Tools.concat("-(", Tools.formatNumber(this.firstNumber),
+                    Tools.getText(this.buttons_operators.get(this.selectedOperator)), Tools.formatNumber(this.secondNumber), ")"));
+            temp = Calculator.operate(this.firstNumber, this.secondNumber, this.buttons_operators.get(this.selectedOperator));
+            this.reset();
+            this.firstNumber = -temp;
+        } else {
+            this.firstNumber = -this.firstNumber;
+            this.output.setText(Tools.formatNumber(this.firstNumber));
         }
+
+        this.updateInputDisplay();
     }
 
     private void squareroot() {
