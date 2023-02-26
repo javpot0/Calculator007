@@ -7,7 +7,8 @@ public enum Operators {
     division((a, b) -> a / b),
     multiplication((a, b) -> a * b),
     subtraction((a, b) -> a - b),
-    addition((a, b) -> a + b);
+    addition((a, b) -> a + b),
+    rootsquare((a, b) -> Math.sqrt(a + b));
 
     private final BinaryOperator<Double> operation;
 

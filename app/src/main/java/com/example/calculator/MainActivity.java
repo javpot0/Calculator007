@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,28 +10,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.function.BinaryOperator;
+import java.util.regex.Matcher;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView input,output;
+public class MainActivity extends AppCompatActivity {
 
-    private final int[] btn_numbers_ids = {
-            R.id.button_0, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5,
-            R.id.button_6, R.id.button_7, R.id.button_8, R.id.button_9
-    };
+    public static final int DEFAULT_SELECTION = -1;
+    public static final double DEFAULT_VALUE = 0;
+    public static final String DEFAULT_INPUT_STATE = "0";
 
-    private final int[] btn_operators_ids = {
-            R.id.button_division, R.id.button_multiplication, R.id.button_subtraction,
-            R.id.button_addition, R.id.button_squareRoot, R.id.button_percentage, R.id.button_divideby
-    };
-
-    private final int[] btn_others_ids = {
-            R.id.button_backspace, R.id.button_ce, R.id.button_c, R.id.button_minus,
-            R.id.button_dot, R.id.button_equals
-    };
-
+    // Button references
     private ArrayList<Button> buttons_numbers;
     private ArrayList<Button> buttons_operators;
+    private ArrayList<Button> buttons_quickOps;
     private ArrayList<Button> buttons_others;
+
+    // TextView for input/output
+    private TextView input;
+    private TextView output;
+
+    // Internal variables keeping track of current inputs
+    private double firstNumber;
+    private double secondNumber;
+
+    private int selectedOperator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +42,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         input = findViewById(R.id.input);
         output = findViewById(R.id.output);
 
-        // Assigning stuff to numbers
+        // Instantiating lists containing buttons
         this.buttons_numbers = new ArrayList<Button>();
-        this.addButtonsToList(this.btn_numbers_ids, this.buttons_numbers);
+        this.addButtonsToList(Tools.BTN_NUMBERS_IDS, this.buttons_numbers);
 
-        // Assigning stuff to operators
         this.buttons_operators = new ArrayList<Button>();
-        this.addButtonsToList(this.btn_operators_ids, this.buttons_operators);
+        this.addButtonsToList(Tools.BTN_OPERATORS_IDS, this.buttons_operators);
 
-        // Assigning stuff to the rest
+        this.buttons_quickOps = new ArrayList<Button>();
+        this.addButtonsToList(Tools.BTN_QUICKOPS_IDS, this.buttons_quickOps);
+
         this.buttons_others = new ArrayList<Button>();
-        this.addButtonsToList(this.btn_others_ids, this.buttons_others);
+        this.addButtonsToList(Tools.BTN_OTHERS_IDS, this.buttons_others);
 
+        this.firstNumber = this.secondNumber = DEFAULT_VALUE;
+
+        // Affecting a behavior to all buttons
         this.setListeners();
     }
-    // GETS EACH ID IN THE LIST OF INT AND ADDS THE BUTTON OBJECT TO LIST
+
+    // Adding button references to the specified ArrayList by Id
     private void addButtonsToList(int[] ids, ArrayList<Button> list) {
         Button button = null;
 
@@ -63,89 +71,116 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // ADDS ONCLICK LISTENERS TO ALL BUTTONS
+    // Adding the proper behavior to specific buttons
     private void setListeners() {
         for (Button button : this.buttons_numbers)
+            button.setOnClickListener(onclick -> { this.setInputText(true, button.getText().toString()); });
+
+        for (Button button : this.buttons_operators)
+            button.setOnClickListener(onclick -> { this.setSelectedOperator(button); });
+
+        for (Button button : this.buttons_quickOps)
             button.setOnClickListener(onclick -> {
-                input.setText(input.getText().toString() + button.getText());
-            });
-
-        for (Button button : this.buttons_operators) {
-            if (this.buttons_operators.indexOf(button) <= this.btn_operators_ids[3]) {
-                button.setOnClickListener(onclick -> { this.setSelected(button); });
-            }
-        }
-    }
-
-    private void setSelected(Button operator) {
-        int lastOperator = this.buttons_operators.indexOf(findViewById(R.id.button_addition)),
-                selected = ContextCompat.getColor(this, R.color.custom_graySelected),
-                normal = ContextCompat.getColor(this, R.color.custom_gray);
-
-        for (int i = 0; i < lastOperator; i++) {
-            operator.setBackgroundColor(operator.equals(this.buttons_operators.get(i)) ? selected : normal);
-        }
-    }
-    @Override
-    public void onClick(View view) {
-        Button btn = (Button) view;
-        String btnText = btn.getText().toString();
-        String btnTag = btn.getTag().toString();
-        String equation = input.getText().toString();
-        double a = Double.parseDouble(equation.substring(0));
-        double b = Double.parseDouble(equation.substring(String.valueOf(a).length()+1));
-
-        switch (btnText) {
-            case "CE" :
-            case "C" :
-                output.setText("");
-                input.setText("0");
-                break;
-            case "/" :
-                Calculator.operate(a,b,"division");
-                break;
-                case "*" :
-                    Calculator.operate(a,b,"multiplication");
-                    break;
-                case "+" :
-                    Calculator.operate(a,b,"subtraction");
-                    break;
-                case "-" :
-                    Calculator.operate(a,b,"addition");
-                    break;
-            case "=" :
-                output.setText(output.getText());
-                break;
-            case "√" :
-                Calculator.root(a);
-                equation += a;
-                break;
-            case "%" :
-                Calculator.operate(a,100,"division");
-                break;
-            case "+/-" :
-                if (a < 0) {
-                    Math.abs(a);
-                    equation += a;
-                }else if (a > 0) {
-                    a = 0 - a;
-                    equation += a;
+                switch(button.getId()) {
+                    case R.id.button_squareRoot :
+                        // MORE TO DO *****
                 }
-                break;
-            case "1/X" :
-                Calculator.operate(1,a,"division");
-                equation += a;
-                break;
-            default:
-                break;
-        }
+            });
+    }
 
-        if(btnTag.equals("backspace")){
-            equation = equation.substring(0,equation.length()-1);
-        }
-        equation += btnText;
-        output.setText(equation);
+    // NOTE FOR BACKSPACE: IF PRESSED, DELETE | IF EMPTY, SET TEXT TO 0
+    // NOTE FOR NUMBERS: CREATE 2 VARIABLES HERE FOR NUMBERS AND ONE FOR OPERATOR IN USE
 
+    // Behavior for number buttons, backspace, ce, c(to be implemented)
+    private void setInputText(boolean concatenating, String text) {
+        String current = this.input.getText().toString();
+
+        if (!concatenating || current.equals(DEFAULT_INPUT_STATE))
+            this.input.setText(text);
+        else
+            this.input.setText(current + text);
+
+        this.parseInputs();
+    }
+
+    // Behavior for output results
+    private void setOutputText(boolean concatenating, String text) {
 
     }
+
+    // Behavior for operator buttons
+    private void setSelectedOperator(Button operator) {
+        ColorStateList selected = Tools.getColor(getColor(R.color.custom_graySelected)),
+                deselected = Tools.getColor(getColor(R.color.custom_gray));
+        int currentSelection = this.buttons_operators.indexOf(operator);
+
+        if (this.isUnaryOperable()) {
+            if (this.selectedOperator == currentSelection) {
+                operator.setBackgroundTintList(deselected);
+                this.selectedOperator = DEFAULT_SELECTION;
+            }
+            else {
+                if (this.selectedOperator != DEFAULT_SELECTION)
+                    this.buttons_operators.get(this.selectedOperator).setBackgroundTintList(deselected);
+
+                operator.setBackgroundTintList(selected);
+                this.selectedOperator = currentSelection;
+            }
+
+            this.setOperatorInView(operator);
+        }
+    }
+
+    private void setOperatorInView(Button operator) {
+        String result = "";
+
+        this.parseInputs();
+        result += this.firstNumber != DEFAULT_VALUE ? String.valueOf(this.firstNumber) : "";
+        result += !result.isEmpty() ? operator.getText() : "";
+        result += this.secondNumber != DEFAULT_VALUE ? String.valueOf(this.secondNumber) : "";
+
+        if (!result.isEmpty())
+            this.setInputText(false, result);
+    }
+
+    // Behavior for quick operation buttons
+    private void setQuickOps(Button quickOp) {
+
+        switch(quickOp.getId()) {
+            case R.id.button_squareRoot:
+        // MORE TO DO *****
+        }
+    }
+
+    // Behavior for misc & other buttons
+    private void setOthers(Button other) {
+        // TO DO ******
+    }
+
+    // Registering inputs
+    private void parseInputs() {
+        String[] input = this.input.getText().toString().split(Tools.OPERATOR_SYMBOLS.pattern());
+
+        this.firstNumber = input.length > 0 ? Double.parseDouble(input[0]) : DEFAULT_VALUE;
+        this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
+
+        for (Button button : this.buttons_operators)
+            if (this.input.getText().toString().indexOf(button.getText().toString()) != DEFAULT_SELECTION)
+                this.selectedOperator = this.buttons_operators.indexOf(button);
+    }
+
+    private String backspace() {
+        String inputStr = this.input.toString();
+
+        return inputStr.substring(0, inputStr.length() - 1);
+    }
+
+    private boolean isUnaryOperable() {
+        return this.firstNumber != DEFAULT_VALUE;
+    }
+
+    private boolean isBinaryOperable() {
+        return this.isUnaryOperable() && this.secondNumber != DEFAULT_VALUE;
+    }
+
 }
