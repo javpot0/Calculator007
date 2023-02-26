@@ -1,7 +1,12 @@
 package com.example.calculator;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.widget.Button;
+import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Tools {
@@ -12,7 +17,7 @@ public class Tools {
 
     public static final int[] BTN_OPERATORS_IDS = {
             R.id.button_division, R.id.button_multiplication, R.id.button_subtraction,
-            R.id.button_addition, R.id.button_squareRoot, R.id.button_percentage, R.id.button_divideby
+            R.id.button_addition, R.id.button_squareRoot
     };
 
     public static final int[] BTN_QUICKOPS_IDS = {
@@ -21,7 +26,7 @@ public class Tools {
     };
 
     public static final int[] BTN_OTHERS_IDS = {
-            R.id.button_backspace, R.id.button_ce, R.id.button_c, R.id.button_minus,
+            R.id.button_backspace, R.id.button_ce, R.id.button_c,
             R.id.button_dot, R.id.button_equals
     };
 
@@ -31,12 +36,50 @@ public class Tools {
         return ColorStateList.valueOf(color);
     }
 
+    // OBSOLETE ** SEE UPDATE IN OPERATORS CLASS
     public static Operators getOperatorFromSymbol(String input) {
         switch (OPERATOR_SYMBOLS.matcher(input).group()) {
             case "/" : return Operators.division;
             case "*" : return Operators.multiplication;
             case "+" : return Operators.addition;
-            default : return Operators.subtraction;
+            case "-" : return Operators.subtraction;
+            default: return Operators.rootsquare;
         }
+    }
+
+    public static boolean isAnInteger(double number) {
+        return number == 0 ? true : number % 1 == 0;
+    }
+
+    public static String formatNumber(double number) {
+        return isAnInteger(number) ? String.valueOf((int) number) : String.valueOf(number);
+    }
+    public static String getText(Button button) {
+        return button.getText().toString();
+    }
+
+    public static String getText(Context context, int id) {
+        return ((Button)((Activity)context).findViewById(id)).getText().toString();
+    }
+
+    public static String getText(TextView textview) {
+        return textview.getText().toString();
+    }
+
+    public static String backspace(TextView textview) {
+        String str = textview.getText().toString();
+
+        if (str.length() > 1)
+            return str.substring(0, str.length() - 1);
+        else
+            return String.valueOf(MainActivity.DEFAULT_VALUE);
+    }
+
+    public static String concat(String... str) {
+        return Arrays.stream(str).reduce("", (s1, s2) -> s1 + s2);
+    }
+
+    public static void setColor(Button button, ColorStateList color) {
+        button.setBackgroundTintList(color);
     }
 }
