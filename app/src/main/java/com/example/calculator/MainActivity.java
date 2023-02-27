@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         if (this.isBinaryOperable())
             result += this.secondNumber == 0 ? "" : Tools.formatNumber(this.secondNumber);
 
-        this.input.setText(!result.isEmpty() ? result : "0");
+        this.input.setText(!result.isEmpty() ? result : String.valueOf((int) DEFAULT_VALUE));
     }
 
     // Behavior for output results
