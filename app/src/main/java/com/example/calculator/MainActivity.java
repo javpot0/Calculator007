@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     // Adding the proper behavior to specific buttons
     private void setListeners() {
         for (Button button : this.buttons_numbers)
-            button.setOnClickListener(onclick -> { this.registerNumberInput(button); });
+            button.setOnClickListener(onclick -> { this.registerInput(button); });
 
         for (Button button : this.buttons_operators)
             button.setOnClickListener(onclick -> { this.setSelectedOperator(button); });
@@ -83,30 +83,23 @@ public class MainActivity extends AppCompatActivity {
 
     // INPUT/OUTPUT
 
+    private void registerInput(Button button) {
+        String result = Tools.getText(this.input) + Tools.getText(button),
+            def = String.valueOf(DEFAULT_VALUE);
+
+        if (result.length() <= MAX_INPUTS &&
+                (!Tools.getText(this.input).equals(def) || !Tools.getText(button).equals(def)))
+            this.input.setText(result);
+
+        this.parseInputs();
+    }
+
     // Registering inputs
     private void parseInputs() {
         String[] input = Tools.OPERATOR_SYMBOLS.split(this.input.getText());
 
-        this.firstNumber = input.length > 0 ? Double.parseDouble(input[0]) : DEFAULT_VALUE;
+        this.firstNumber = Double.parseDouble(input[0]);
         this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
-
-        for (Button button : this.buttons_operators)
-            if (button.getBackgroundTintList().equals(Tools.getColor(getColor(R.color.custom_graySelected))))
-                this.selectedOperator = this.buttons_operators.indexOf(button);
-    }
-
-    // Behavior for number buttons, backspace, ce, c(to be implemented)
-    private void registerNumberInput(Button button) {
-        String current = Tools.getText(this.input);
-
-        current = current.equals(String.valueOf(DEFAULT_VALUE)) ? "" : current;
-        this.parseInputs();
-
-        if (current.length() < MAX_INPUTS)
-            if (this.isBinaryOperable() || )
-                this.secondNumber = Double.parseDouble(String.valueOf(this.secondNumber) + Tools.getText(button));
-
-
 
         this.updateInputDisplay();
     }
@@ -115,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateInputDisplay() {
         String result = "";
 
-        this.parseInputs();
         if (this.isUnaryOperable())
             result += Tools.formatNumber(this.firstNumber);
         if (this.selectedOperator != DEFAULT_SELECTION)
@@ -160,43 +152,6 @@ public class MainActivity extends AppCompatActivity {
     // Behavior for quick operation buttons - **Consider optimizing code readability/atomize into methods
     private void setQuickOps(Button quickOp) {
         int id = quickOp.getId();
-        /*
-        String operation = "";
-        double a, b, result;
-
-        a = b = result = DEFAULT_VALUE;
-        if (this.isUnaryOperable()) {
-            switch (id) {
-            case R.id.button_squareRoot:
-                if (this.isBinaryOperable()) {
-                    a = Calculator.operate(this.firstNumber, this.secondNumber,
-                            Tools.getText(this.buttons_operators.get(this.selectedOperator)));
-                    this.reset();
-                    this.firstNumber = a;
-                }
-
-                a = this.firstNumber;
-                operation = Tools.getText(quickOp);
-                this.output.setText(Tools.concat(Tools.getText(quickOp), Tools.formatNumber(this.firstNumber)));
-            break;
-            default:
-                if (id != R.id.button_minus) {
-                    a = id == R.id.button_percentage ? this.firstNumber : DIVIDEBY;
-                    b = id == R.id.button_percentage ? PERCENTAGE : this.firstNumber;
-                    operation = Tools.getText(findViewById(R.id.button_division));
-                    this.output.setText(Tools.concat(
-                            Tools.formatNumber(this.firstNumber), operation, Tools.formatNumber(this.secondNumber)));
-                }
-                else
-                    this.firstNumber = -this.firstNumber;
-            }
-
-            if (id != R.id.button_minus) {
-                this.reset();
-                this.firstNumber = Calculator.operate(a, b, operation);
-            }
-        }
-        */
 
         if (this.isUnaryOperable())
             if (id == R.id.button_minus)

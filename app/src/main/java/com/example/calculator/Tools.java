@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Tools {
     public static final int[] BTN_NUMBERS_IDS = {
-            R.id.button_0, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5,
+            R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5,
             R.id.button_6, R.id.button_7, R.id.button_8, R.id.button_9
     };
 
@@ -36,19 +36,8 @@ public class Tools {
         return ColorStateList.valueOf(color);
     }
 
-    // OBSOLETE ** SEE UPDATE IN OPERATORS CLASS
-    public static Operators getOperatorFromSymbol(String input) {
-        switch (OPERATOR_SYMBOLS.matcher(input).group()) {
-            case "/" : return Operators.division;
-            case "*" : return Operators.multiplication;
-            case "+" : return Operators.addition;
-            case "-" : return Operators.subtraction;
-            default: return Operators.rootsquare;
-        }
-    }
-
     public static boolean isAnInteger(double number) {
-        return number == 0 ? true : number % 1 == 0;
+        return number == 0 || number % 1 == 0;
     }
 
     public static String formatNumber(double number) {
