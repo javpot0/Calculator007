@@ -12,8 +12,4 @@ public class Calculator {
         return Operators.valueOf(Tools.getText(operator)).getOperator().apply(a, b);
     }
 
-    // another rootsquare option. See in com.example.calculator.Operators class.
-    public static double root(double a) {
-        return Math.sqrt(a);
-    }
 }
