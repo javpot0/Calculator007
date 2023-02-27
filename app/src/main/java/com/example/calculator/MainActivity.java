@@ -291,14 +291,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void equals() {
-        Button btn = this.buttons_operators.get(selectedOperator);
+        Button btn = null;
         String answer = "";
         String a = String.valueOf(this.firstNumber);
         String b = String.valueOf(this.secondNumber);
+        String remove = "";
 
     if(this.isBinaryOperable()) {
+        btn = this.buttons_operators.get(selectedOperator);
          answer = String.valueOf(Calculator.operate(this.firstNumber,this.secondNumber,btn));
          output.setText(Tools.concat(a,btn.getText().toString(),b));
+        this.reset();
+        this.firstNumber = Double.parseDouble(answer);
         input.setText(answer);
     }
     }
