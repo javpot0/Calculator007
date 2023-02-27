@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int DEFAULT_SELECTION = -1;
-    public static final double DEFAULT_VALUE = 0;
-    public static final double DIVIDEBY = 1;
-    public static final double PERCENTAGE = 100;
+    public static final int DEFAULT_SELECTION = -1; // Operator selection
+    public static final double DEFAULT_VALUE = 0;   // Default input display
+    public static final double DIVIDEBY = 1;    // The 1/X button
+    public static final double PERCENTAGE = 100; // The % button
+    public static final int MAX_INPUTS = 10; // The max amount of characters in the input
 
     // Button references
     private ArrayList<Button> buttons_numbers;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     // Adding the proper behavior to specific buttons
     private void setListeners() {
         for (Button button : this.buttons_numbers)
-            button.setOnClickListener(onclick -> { this.setInputText(true, button.getText().toString()); });
+            button.setOnClickListener(onclick -> { this.registerNumberInput(button); });
 
         for (Button button : this.buttons_operators)
             button.setOnClickListener(onclick -> { this.setSelectedOperator(button); });
@@ -95,16 +96,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Behavior for number buttons, backspace, ce, c(to be implemented)
-    private void setInputText(boolean concatenating, String text) {
+    private void registerNumberInput(Button button) {
         String current = Tools.getText(this.input);
 
-        if (!concatenating || current.equals(String.valueOf(DEFAULT_VALUE)))
-            this.input.setText(text);
-        else
-            this.input.setText(Tools.concat(current, text));
+        current = current.equals(String.valueOf(DEFAULT_VALUE)) ? "" : current;
+        this.parseInputs();
 
-        // REMOVED FOR NOW CUZ INFINITE RECURSION
-        // this.updateInputDisplay();
+        if (current.length() < MAX_INPUTS)
+            if (this.isBinaryOperable() || )
+                this.secondNumber = Double.parseDouble(String.valueOf(this.secondNumber) + Tools.getText(button));
+
+
+
+        this.updateInputDisplay();
     }
 
     // Updates input textview after parsing numbers and operator
@@ -235,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
             this.output.setText(Tools.concat(root, nb1));
 
         temp = Calculator.operate(this.firstNumber, this.secondNumber, findViewById(R.id.button_squareRoot));
-        this.setInputText(false, Tools.formatNumber(this.firstNumber));
+        this.input.setText(Tools.formatNumber(this.firstNumber));
 
     }
 
