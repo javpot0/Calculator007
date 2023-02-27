@@ -174,7 +174,8 @@ public class MainActivity extends AppCompatActivity {
             else if (id == R.id.button_squareRoot)
                 this.squareroot();
             else
-                this.quickDivides(id == R.id.button_percentage);
+                this.quickDivides(quickOp);
+
     }
 
     private void minus() {
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         this.updateInputDisplay();
     }
 
-    private void squareroot() {
+ /*   private void squareroot() {
         double temp = DEFAULT_VALUE;
         String nb1 = Tools.formatNumber(this.firstNumber), nb2 = Tools.formatNumber(this.secondNumber),
             root = Operators.rootsquare.getSymbol();
@@ -212,9 +213,13 @@ public class MainActivity extends AppCompatActivity {
         this.input.setText(Tools.formatNumber(this.firstNumber));
 
     }
-
+*/
+    private void squareroot() {
+            this.firstNumber = Math.sqrt(this.firstNumber);
+            this.updateInputDisplay();
+    }
     // TODO
-    private void quickDivides(boolean percentageSelected) {
+ /*   private void quickDivides(boolean percentageSelected) {
         double a, b;
         Button divide = findViewById(R.id.button_division);
 
@@ -227,14 +232,24 @@ public class MainActivity extends AppCompatActivity {
         this.reset();
         this.firstNumber = Calculator.operate(a, b, divide);
     }
-
+*/
+    private void quickDivides(Button btn) {
+      if(btn.getId() == R.id.button_percentage)
+          this.firstNumber = this.firstNumber/100;
+      else if (btn.getId() == R.id.button_divideby) {
+          this.firstNumber = 1/this.firstNumber;
+      }
+        this.updateInputDisplay();
+    }
     // MISC.
 
     // Behavior for misc & other buttons
     private void setOthers(Button other) {
         switch (other.getId()) {
-            case R.id.button_ce:
-                this.reset();
+            case R.id.button_ce :
+                this.updateInputDisplay();
+                this.output.setText("");
+            case R.id.button_c :
                 this.updateInputDisplay();
                 this.output.setText("");
             case R.id.button_backspace:

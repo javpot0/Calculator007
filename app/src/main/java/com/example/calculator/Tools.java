@@ -44,7 +44,7 @@ public class Tools {
         if (number == 0)
             return "0";
 
-        return isAnInteger(number) ? String.valueOf((int) number) : String.valueOf(number);
+     return isAnInteger(number) ? String.valueOf((int) number) : String.valueOf(number);
     }
     public static String getText(Button button) {
         return button.getText().toString();
