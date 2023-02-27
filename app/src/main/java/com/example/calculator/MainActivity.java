@@ -211,9 +211,9 @@ public class MainActivity extends AppCompatActivity {
 */
     private void minus() {
         if(this.isUnaryOperable() /* && check selected operator */) {
-            this.firstNumber = DEFAULT_VALUE - this.firstNumber;
+            this.firstNumber = -this.firstNumber;
         } else if (this.isBinaryOperable()) {
-            this.secondNumber = DEFAULT_VALUE - this.secondNumber;
+            this.secondNumber = -this.secondNumber;
         }
         this.updateInputDisplay();
     }
