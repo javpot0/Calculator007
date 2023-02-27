@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Internal variables keeping track of current inputs
     private double firstNumber;
-    private boolean firstDotted;
+
     private double secondNumber;
-    private boolean secondDotted;
+
     private int selectedOperator;
 
     @Override
@@ -334,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
                 Tools.getColor(getColor(R.color.custom_gray)));
 
         this.firstNumber = this.secondNumber = DEFAULT_VALUE;
-        this.firstDotted = this.secondDotted = false;
         this.selectedOperator = DEFAULT_SELECTION;
     }
 
