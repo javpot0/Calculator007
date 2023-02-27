@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
         }
         this.updateInputDisplay();
     }
+
     /*
     private void squareroot() {
         double temp = DEFAULT_VALUE;
@@ -238,7 +239,8 @@ public class MainActivity extends AppCompatActivity {
         this.input.setText(Tools.formatNumber(this.firstNumber));
 
     }
-*/
+    */
+
     private void squareroot() {
             this.firstNumber = Math.sqrt(this.firstNumber);
             this.updateInputDisplay();
