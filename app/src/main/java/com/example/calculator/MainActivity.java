@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         if (this.isBinaryOperable())
             result += this.secondNumber == 0 ? "" : Tools.formatNumber(this.secondNumber);
 
-        this.input.setText(!result.isEmpty() ? result : Tools.formatNumber(DEFAULT_VALUE));
+        this.input.setText(!result.isEmpty() ? result : String.valueOf((int) DEFAULT_VALUE));
     }
 
     // Behavior for output results
@@ -185,23 +185,13 @@ public class MainActivity extends AppCompatActivity {
             else if (id == R.id.button_squareRoot)
                 this.squareroot();
             else
-                this.quickDivides(id == R.id.button_percentage);
+                this.quickDivides(quickOp);
 
             this.updateInputDisplay();
         }
     }
 
-    private void minus() {
-        if(this.isUnaryOperable() /* && check selected operator */) {
-            this.firstNumber = DEFAULT_VALUE - this.firstNumber;
-        } else if (this.isBinaryOperable()) {
-            this.secondNumber = DEFAULT_VALUE - this.secondNumber;
-        }
-        this.updateInputDisplay();
-    }
-
-    /*
-    private void minus() {
+ /*   private void minus() {
         double temp = DEFAULT_VALUE;
 
         if (this.isBinaryOperable()) {
@@ -217,16 +207,15 @@ public class MainActivity extends AppCompatActivity {
 
         this.updateInputDisplay();
     }
-    */
-
-    private void squareroot() {
-        if (!this.isBinaryOperable()) {
-            this.output.setText(Tools.concat("√" , Tools.formatNumber(this.firstNumber)));
-            this.firstNumber = Math.sqrt(this.firstNumber);
-            this.updateInputDisplay();
+*/
+    private void minus() {
+        if(this.isUnaryOperable() /* && check selected operator */) {
+            this.firstNumber = DEFAULT_VALUE - this.firstNumber;
+        } else if (this.isBinaryOperable()) {
+            this.secondNumber = DEFAULT_VALUE - this.secondNumber;
         }
+        this.updateInputDisplay();
     }
-
     /*
     private void squareroot() {
         double temp = DEFAULT_VALUE;
@@ -246,11 +235,13 @@ public class MainActivity extends AppCompatActivity {
         this.input.setText(Tools.formatNumber(this.firstNumber));
 
     }
+*/
+    private void squareroot() {
+            this.firstNumber = Math.sqrt(this.firstNumber);
+            this.updateInputDisplay();
+    }
 
-
-
-    // TODO
-    private void quickDivides(boolean percentageSelected) {
+ /*   private void quickDivides(boolean percentageSelected) {
         double a, b;
         Button divide = findViewById(R.id.button_division);
 
@@ -258,22 +249,18 @@ public class MainActivity extends AppCompatActivity {
         a = percentageSelected ? this.firstNumber : DIVIDEBY;
         b = percentageSelected ? PERCENTAGE : this.firstNumber;
 
-        // this.selectedOperator = this.buttons_operators.indexOf(divide);
-        // this.output.setText(Tools.concat(Tools.formatNumber(a), this.getCurrentOperator(), Tools.formatNumber(b)));
-        // this.reset();
-        // this.firstNumber = Calculator.operate(a, b, divide);
+        this.selectedOperator = this.buttons_operators.indexOf(divide);
+        this.output.setText(Tools.concat(Tools.formatNumber(a), this.getCurrentOperator(), Tools.formatNumber(b)));
+        this.reset();
+        this.firstNumber = Calculator.operate(a, b, divide);
     }
-     */
-
-    private void quickDivides(boolean percentageSelected) {
-        if (percentageSelected) {
-            this.output.setText(Tools.concat("%", Tools.formatNumber(this.firstNumber)));
-            this.firstNumber = Calculator.operate(this.firstNumber, 100., "division");
-        } else {
-            this.output.setText(Tools.concat("1/", Tools.formatNumber(this.firstNumber)));
-            this.firstNumber = Calculator.operate(1, this.firstNumber, "division");
-        }
-
+*/
+    private void quickDivides(Button btn) {
+      if(btn.getId() == R.id.button_percentage)
+          this.firstNumber = this.firstNumber/100;
+      else if (btn.getId() == R.id.button_divideby) {
+          this.firstNumber = 1/this.firstNumber;
+      }
         this.updateInputDisplay();
     }
 
@@ -295,15 +282,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button_dot:
                 this.dot();
             break;
-            default:
+            case R.id.button_equals:
                 this.equals();
+                break;
         }
 
         this.updateInputDisplay();
     }
 
     private void equals() {
+        Button btn = this.buttons_operators.get(selectedOperator);
+        String answer = "";
+        String a = String.valueOf(this.firstNumber);
+        String b = String.valueOf(this.secondNumber);
 
+    if(this.isBinaryOperable()) {
+         answer = String.valueOf(Calculator.operate(this.firstNumber,this.secondNumber,btn));
+         output.setText(Tools.concat(a,btn.getText().toString(),b));
+        input.setText(answer);
+    }
     }
 
     private void dot() {
