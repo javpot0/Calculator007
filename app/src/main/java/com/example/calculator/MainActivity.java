@@ -115,8 +115,10 @@ public class MainActivity extends AppCompatActivity {
     private void parseInputs() {
         String[] input = Tools.OPERATOR_SYMBOLS.split(this.input.getText());
 
-        this.firstNumber = Double.parseDouble(input[0]);
-        this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
+        if (this.firstNumber > DEFAULT_VALUE && this.secondNumber > DEFAULT_VALUE) {
+            this.firstNumber = Double.parseDouble(input[0]);
+            this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
+        }
 
         this.updateInputDisplay();
     }
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void parseInParam(String text) {
         String[] input = Tools.OPERATOR_SYMBOLS.split(text);
 
-        if (!text.contains("-")) {
+        if (this.firstNumber > DEFAULT_VALUE && this.secondNumber > DEFAULT_VALUE) {
             this.firstNumber = Double.parseDouble(input[0]);
             this.secondNumber = input.length > 1 ? Double.parseDouble(input[input.length - 1]) : DEFAULT_VALUE;
         }
