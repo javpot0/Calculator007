@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+// ZI HENG LIU, ZAFER ACAR, JAVEN VERNET
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int DEFAULT_SELECTION = -1; // Operator selection
@@ -93,21 +95,15 @@ public class MainActivity extends AppCompatActivity {
         String result = Tools.getText(button),
             def = String.valueOf(DEFAULT_VALUE);
 
-        if (button.equals(findViewById(R.id.button_dot))) {
-            if (!this.isBinaryOperable())
-                this.firstDotted = true;
-            else
-                this.secondDotted = true;
-        } else {
-            if (this.firstNumber != DEFAULT_SELECTION) {
-                result = Tools.getText(this.input) + result;
 
-                if (result.length() <= MAX_INPUTS &&
-                        (!Tools.getText(this.input).equals(def) || !Tools.getText(button).equals(def)))
-                    this.input.setText(result);
+        if (this.firstNumber != DEFAULT_SELECTION) {
+            result = Tools.getText(this.input) + result;
 
-                this.parseInputs();
-            }
+            if (result.length() <= MAX_INPUTS &&
+                    (!Tools.getText(this.input).equals(def) || !Tools.getText(button).equals(def)))
+                this.input.setText(result);
+
+            this.parseInputs();
         }
     }
 
@@ -115,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
     private void parseInputs() {
         String[] input = Tools.OPERATOR_SYMBOLS.split(this.input.getText());
 
-        if (this.firstNumber > DEFAULT_VALUE && this.secondNumber > DEFAULT_VALUE) {
-            this.firstNumber = Double.parseDouble(input[0]);
-            this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
-        }
+
+        this.firstNumber = Double.parseDouble(input[0]);
+        this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
+
 
         this.updateInputDisplay();
     }
@@ -126,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
     private void parseInParam(String text) {
         String[] input = Tools.OPERATOR_SYMBOLS.split(text);
 
-        if (this.firstNumber > DEFAULT_VALUE && this.secondNumber > DEFAULT_VALUE) {
-            this.firstNumber = Double.parseDouble(input[0]);
-            this.secondNumber = input.length > 1 ? Double.parseDouble(input[input.length - 1]) : DEFAULT_VALUE;
-        }
+
+        this.firstNumber = Double.parseDouble(input[0]);
+        this.secondNumber = input.length > 1 ? Double.parseDouble(input[input.length - 1]) : DEFAULT_VALUE;
+
 
         this.updateInputDisplay();
     }
