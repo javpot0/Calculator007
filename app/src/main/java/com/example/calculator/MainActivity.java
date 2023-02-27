@@ -93,14 +93,22 @@ public class MainActivity extends AppCompatActivity {
         String result = Tools.getText(button),
             def = String.valueOf(DEFAULT_VALUE);
 
-        if (this.firstNumber != DEFAULT_SELECTION)
-            result = Tools.getText(this.input) + result;
+        if (button.equals(findViewById(R.id.button_dot))) {
+            if (!this.isBinaryOperable())
+                this.firstDotted = true;
+            else
+                this.secondDotted = true;
+        } else {
+            if (this.firstNumber != DEFAULT_SELECTION) {
+                result = Tools.getText(this.input) + result;
 
-        if (result.length() <= MAX_INPUTS &&
-                (!Tools.getText(this.input).equals(def) || !Tools.getText(button).equals(def)))
-            this.input.setText(result);
+                if (result.length() <= MAX_INPUTS &&
+                        (!Tools.getText(this.input).equals(def) || !Tools.getText(button).equals(def)))
+                    this.input.setText(result);
 
-        this.parseInputs();
+                this.parseInputs();
+            }
+        }
     }
 
     // Registering inputs

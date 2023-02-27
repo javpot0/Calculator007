@@ -9,7 +9,7 @@ public class Calculator {
     }
 
     public static double operate(double a, double b, Button operator) {
-        return Operators.valueOf(Tools.getText(operator)).getOperator().apply(a, b);
+        return Operators.getOperatorBySymbol(Tools.getText(operator)).getOperator().apply(a, b);
     }
 
 }
