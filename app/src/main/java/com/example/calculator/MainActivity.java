@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         if (this.isBinaryOperable())
             result += this.secondNumber == 0 ? "" : Tools.formatNumber(this.secondNumber);
 
-        this.input.setText(!result.isEmpty() ? result : String.valueOf((int) DEFAULT_VALUE));
+        this.input.setText(!result.isEmpty() ? result : Tools.formatNumber(DEFAULT_VALUE));
     }
 
     // Behavior for output results
@@ -168,15 +168,28 @@ public class MainActivity extends AppCompatActivity {
     private void setQuickOps(Button quickOp) {
         int id = quickOp.getId();
 
-        if (this.isUnaryOperable())
+        if (this.isUnaryOperable() && !this.isBinaryOperable()) {
             if (id == R.id.button_minus)
                 this.minus();
             else if (id == R.id.button_squareRoot)
                 this.squareroot();
             else
                 this.quickDivides(id == R.id.button_percentage);
+
+            this.updateInputDisplay();
+        }
     }
 
+    private void minus() {
+        if(this.isUnaryOperable() /* && check selected operator */) {
+            this.firstNumber = DEFAULT_VALUE - this.firstNumber;
+        } else if (this.isBinaryOperable()) {
+            this.secondNumber = DEFAULT_VALUE - this.secondNumber;
+        }
+        this.updateInputDisplay();
+    }
+
+    /*
     private void minus() {
         double temp = DEFAULT_VALUE;
 
@@ -193,7 +206,17 @@ public class MainActivity extends AppCompatActivity {
 
         this.updateInputDisplay();
     }
+    */
 
+    private void squareroot() {
+        if (!this.isBinaryOperable()) {
+            this.output.setText(Tools.concat("√" , Tools.formatNumber(this.firstNumber)));
+            this.firstNumber = Math.sqrt(this.firstNumber);
+            this.updateInputDisplay();
+        }
+    }
+
+    /*
     private void squareroot() {
         double temp = DEFAULT_VALUE;
         String nb1 = Tools.formatNumber(this.firstNumber), nb2 = Tools.formatNumber(this.secondNumber),
@@ -213,6 +236,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     // TODO
     private void quickDivides(boolean percentageSelected) {
         double a, b;
@@ -222,10 +247,23 @@ public class MainActivity extends AppCompatActivity {
         a = percentageSelected ? this.firstNumber : DIVIDEBY;
         b = percentageSelected ? PERCENTAGE : this.firstNumber;
 
-        this.selectedOperator = this.buttons_operators.indexOf(divide);
-        this.output.setText(Tools.concat(Tools.formatNumber(a), this.getCurrentOperator(), Tools.formatNumber(b)));
-        this.reset();
-        this.firstNumber = Calculator.operate(a, b, divide);
+        // this.selectedOperator = this.buttons_operators.indexOf(divide);
+        // this.output.setText(Tools.concat(Tools.formatNumber(a), this.getCurrentOperator(), Tools.formatNumber(b)));
+        // this.reset();
+        // this.firstNumber = Calculator.operate(a, b, divide);
+    }
+     */
+
+    private void quickDivides(boolean percentageSelected) {
+        if (percentageSelected) {
+            this.output.setText(Tools.concat("%", Tools.formatNumber(this.firstNumber)));
+            this.firstNumber = Calculator.operate(this.firstNumber, 100., "division");
+        } else {
+            this.output.setText(Tools.concat("1/", Tools.formatNumber(this.firstNumber)));
+            this.firstNumber = Calculator.operate(1, this.firstNumber, "division");
+        }
+
+        this.updateInputDisplay();
     }
 
     // MISC.
@@ -234,14 +272,35 @@ public class MainActivity extends AppCompatActivity {
     private void setOthers(Button other) {
         switch (other.getId()) {
             case R.id.button_ce:
-                this.reset();
-                this.updateInputDisplay();
-                this.output.setText("");
+                this.clearEverything();
+            break;
+            case R.id.button_c:
+                this.clear();
+            break;
             case R.id.button_backspace:
                 this.parseInParam(Tools.backspace(this.input));
+            break;
+            case R.id.button_dot:
+                break;
             default:
-
         }
+
+        this.updateInputDisplay();
+    }
+
+    private void clearEverything() {
+        this.reset();
+        this.updateInputDisplay();
+        this.output.setText("");
+    }
+
+    private void clear() {
+        if (this.isBinaryOperable())
+            this.secondNumber = DEFAULT_VALUE;
+        else if (this.isUnaryOperable() && this.selectedOperator != DEFAULT_SELECTION)
+            this.selectedOperator = DEFAULT_SELECTION;
+        else
+            this.firstNumber = DEFAULT_VALUE;
     }
 
     // Sets the current numbers and operator back to default values.
@@ -252,13 +311,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.firstNumber = this.secondNumber = DEFAULT_VALUE;
         this.selectedOperator = DEFAULT_SELECTION;
-    }
-
-    private String getCurrentOperator() {
-        if (this.selectedOperator != DEFAULT_SELECTION)
-            return Tools.getText(this.buttons_operators.get(this.selectedOperator));
-
-        return "";
     }
 
     // Returns the name of the element with the id in parameter

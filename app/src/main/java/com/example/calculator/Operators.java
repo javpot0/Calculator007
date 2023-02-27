@@ -6,7 +6,7 @@ public enum Operators {
 
     division(((a, b) -> a / b), "/"),
     multiplication(((a, b) -> a * b), "*"),
-    subtraction(((a, b) -> a - b), "-"),
+    subtraction(((a, b) -> a - b), "-"),    // TO FIX LATER
     addition(((a, b) -> a + b), "+"),
     rootsquare(((a, b) -> Math.sqrt(a + b)), "√");
 
