@@ -124,8 +124,10 @@ public class MainActivity extends AppCompatActivity {
     private void parseInParam(String text) {
         String[] input = Tools.OPERATOR_SYMBOLS.split(text);
 
-        this.firstNumber = Double.parseDouble(input[0]);
-        this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
+        if (!text.contains("-")) {
+            this.firstNumber = Double.parseDouble(input[0]);
+            this.secondNumber = input.length > 1 ? Double.parseDouble(input[input.length - 1]) : DEFAULT_VALUE;
+        }
 
         this.updateInputDisplay();
     }
@@ -147,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
     // Behavior for output results
     private void setOutputDisplay(String text) {
         this.output.setText(this.input.getText());
-
     }
 
     // BUTTONS
