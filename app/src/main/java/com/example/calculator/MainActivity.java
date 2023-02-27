@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
             this.firstNumber = Math.sqrt(this.firstNumber);
             this.updateInputDisplay();
     }
-    // TODO
+
  /*   private void quickDivides(boolean percentageSelected) {
         double a, b;
         Button divide = findViewById(R.id.button_division);
@@ -274,15 +274,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button_dot:
                 this.dot();
             break;
-            default:
+            case R.id.button_equals:
                 this.equals();
+                break;
         }
 
         this.updateInputDisplay();
     }
 
     private void equals() {
+        Button btn = this.buttons_operators.get(selectedOperator);
+        String answer = "";
+        String a = String.valueOf(this.firstNumber);
+        String b = String.valueOf(this.secondNumber);
 
+    if(this.isBinaryOperable()) {
+         answer = String.valueOf(Calculator.operate(this.firstNumber,this.secondNumber,btn));
+         output.setText(Tools.concat(a,btn.getText().toString(),b));
+        input.setText(answer);
+    }
     }
 
     private void dot() {
