@@ -87,8 +87,11 @@ public class MainActivity extends AppCompatActivity {
     // INPUT/OUTPUT
 
     private void registerInput(Button button) {
-        String result = Tools.getText(this.input) + Tools.getText(button),
+        String result = Tools.getText(button),
             def = String.valueOf(DEFAULT_VALUE);
+
+        if (this.firstNumber != DEFAULT_SELECTION)
+            result = Tools.getText(this.input) + result;
 
         if (result.length() <= MAX_INPUTS &&
                 (!Tools.getText(this.input).equals(def) || !Tools.getText(button).equals(def)))
@@ -121,13 +124,13 @@ public class MainActivity extends AppCompatActivity {
         String result = "";
 
         if (this.isUnaryOperable())
-            result += Tools.formatNumber(this.firstNumber);
+            result += this.firstNumber == 0 ? "0" : Tools.formatNumber(this.firstNumber);
         if (this.selectedOperator != DEFAULT_SELECTION)
             result += this.buttons_operators.get(this.selectedOperator).getText();
         if (this.isBinaryOperable())
-            result += Tools.formatNumber(this.secondNumber);
+            result += this.secondNumber == 0 ? "" : Tools.formatNumber(this.secondNumber);
 
-        this.input.setText(!result.isEmpty() ? result : String.valueOf(DEFAULT_VALUE));
+        this.input.setText(!result.isEmpty() ? result : "0");
     }
 
     // Behavior for output results
@@ -243,8 +246,10 @@ public class MainActivity extends AppCompatActivity {
 
     // Sets the current numbers and operator back to default values.
     private void reset() {
-        this.buttons_operators.get(this.selectedOperator).setBackgroundTintList(
+        if (this.selectedOperator != DEFAULT_SELECTION)
+            this.buttons_operators.get(this.selectedOperator).setBackgroundTintList(
                 Tools.getColor(getColor(R.color.custom_gray)));
+
         this.firstNumber = this.secondNumber = DEFAULT_VALUE;
         this.selectedOperator = DEFAULT_SELECTION;
     }
