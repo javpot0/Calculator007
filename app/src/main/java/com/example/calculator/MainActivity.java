@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         for (Button button : this.buttons_quickOps)
             button.setOnClickListener(onclick -> { this.setQuickOps(button); });
+
+        for (Button button : this.buttons_others)
+            button.setOnClickListener(onclick -> { this.setOthers(button); });
     }
 
     // INPUT/OUTPUT
@@ -97,6 +100,15 @@ public class MainActivity extends AppCompatActivity {
     // Registering inputs
     private void parseInputs() {
         String[] input = Tools.OPERATOR_SYMBOLS.split(this.input.getText());
+
+        this.firstNumber = Double.parseDouble(input[0]);
+        this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
+
+        this.updateInputDisplay();
+    }
+
+    private void parseInParam(String text) {
+        String[] input = Tools.OPERATOR_SYMBOLS.split(text);
 
         this.firstNumber = Double.parseDouble(input[0]);
         this.secondNumber = input.length > 1 ? Double.parseDouble(input[1]) : DEFAULT_VALUE;
@@ -217,7 +229,16 @@ public class MainActivity extends AppCompatActivity {
 
     // Behavior for misc & other buttons
     private void setOthers(Button other) {
-        // TO DO ******
+        switch (other.getId()) {
+            case R.id.button_ce:
+                this.reset();
+                this.updateInputDisplay();
+                this.output.setText("");
+            case R.id.button_backspace:
+                this.parseInParam(Tools.backspace(this.input));
+            default:
+
+        }
     }
 
     // Sets the current numbers and operator back to default values.
