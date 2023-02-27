@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.Button;
@@ -29,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Internal variables keeping track of current inputs
     private double firstNumber;
+    private boolean firstDotted;
     private double secondNumber;
+    private boolean secondDotted;
     private int selectedOperator;
 
     @Override
@@ -269,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
     // MISC.
 
     // Behavior for misc & other buttons
+    @SuppressLint("NonConstantResourceId")
     private void setOthers(Button other) {
         switch (other.getId()) {
             case R.id.button_ce:
@@ -281,11 +285,21 @@ public class MainActivity extends AppCompatActivity {
                 this.parseInParam(Tools.backspace(this.input));
             break;
             case R.id.button_dot:
-                break;
+                this.dot();
+            break;
             default:
+                this.equals();
         }
 
         this.updateInputDisplay();
+    }
+
+    private void equals() {
+
+    }
+
+    private void dot() {
+
     }
 
     private void clearEverything() {
@@ -310,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
                 Tools.getColor(getColor(R.color.custom_gray)));
 
         this.firstNumber = this.secondNumber = DEFAULT_VALUE;
+        this.firstDotted = this.secondDotted = false;
         this.selectedOperator = DEFAULT_SELECTION;
     }
 
